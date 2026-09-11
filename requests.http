@@ -1,0 +1,74 @@
+### Post Service API Requests
+### Base URL: http://localhost:8080
+
+### 1. Create a new Post (Valid Request -> 201 Created)
+POST http://localhost:8080/api/posts
+Content-Type: application/json
+
+{
+  "content": "Mastering Spring Boot 3",
+  "text": "Deep dive into REST API design, validation, filters, and MDC logging."
+}
+
+### 2. Validation Failure - Blank Content (-> 400 Bad Request)
+POST http://localhost:8080/api/posts
+Content-Type: application/json
+
+{
+  "content": "",
+  "text": "This request should fail because content is empty."
+}
+
+### 3. Validation Failure - Text Exceeds Limit (-> 400 Bad Request)
+POST http://localhost:8080/api/posts
+Content-Type: application/json
+
+{
+  "content": "Valid Content",
+  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+}
+
+### 4. Get All Posts (-> 200 OK)
+GET http://localhost:8080/api/posts
+Accept: application/json
+
+### 5. Get Post By ID (-> 200 OK)
+GET http://localhost:8080/api/posts/1
+Accept: application/json
+
+### 6. Get Post By ID - Not Found (-> 404 Not Found)
+GET http://localhost:8080/api/posts/9999
+Accept: application/json
+
+### 7. Update Post (-> 200 OK)
+PUT http://localhost:8080/api/posts/1
+Content-Type: application/json
+
+{
+  "content": "Mastering Spring Boot 3 & Microservices (Updated)",
+  "text": "Updated text describing advanced interceptor and filter patterns."
+}
+
+### 8. Schedule Post for Future (-> 200 OK)
+POST http://localhost:8080/api/posts/1/schedule
+Content-Type: application/json
+
+{
+  "scheduledAt": "2028-12-31T15:30:00"
+}
+
+### 9. Schedule Post with Past Timestamp (-> 400 Bad Request)
+POST http://localhost:8080/api/posts/1/schedule
+Content-Type: application/json
+
+{
+  "scheduledAt": "2020-01-01T10:00:00"
+}
+
+### 10. Delete Post (-> 200 OK)
+DELETE http://localhost:8080/api/posts/1
+Accept: application/json
+
+### 11. Delete Post - Not Found (-> 404 Not Found)
+DELETE http://localhost:8080/api/posts/9999
+Accept: application/json
